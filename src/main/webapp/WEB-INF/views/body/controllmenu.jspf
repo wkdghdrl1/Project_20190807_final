@@ -1,0 +1,122 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="rootPath" value="${pageContext.request.contextPath}" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${rootPath}/resources/css/diet-controll.css?ver=20190716">
+
+<script>
+	$(function() {
+		$("#btn_search").click(function() {
+			var u_gender = $("#u_gender").val();
+			var u_age = $("#u_age").val();
+			var u_height = $("#u_height").val();
+			var u_weight = $("#u_weight").val();
+			
+			var m_morning = Number($("#m_morning option:selected").val());
+			var m_afternoon = Number($("#m_afternoon option:selected").val());
+			var m_evening = Number($("#m_evening option:selected").val());
+			
+			var total_kcal = m_morning + m_afternoon + m_evening;
+			
+			var base_kcal = Number(u_weight) * 30;
+			
+			$("#total_kcal").val(total_kcal);
+			$("#base_kcal").val(base_kcal);
+			
+			$("#form").attr("action","${rootPath}/userview");
+			
+			if(u_gender == ""){
+				alert("성별을 입력하세요.");
+				return;
+			}
+			
+			if(u_age == ""){
+				alert("나이를 입력하세요.");
+				return;
+			}
+			
+			if(u_height == ""){
+				alert("키를 입력하세요.");
+				return;
+			}
+			if(u_weight == ""){
+				alert("몸무게를 입력하세요.");
+				return;
+			}
+			$("#form").submit();
+		})
+
+	})
+</script>
+<body>
+	<header class="main-head">사용자 맞춤형 식단 관리</header>
+	<form method="POST" id="form">
+		<input type="hidden" name="base_kcal" id="base_kcal" value="" /> <input
+			type="hidden" name="total_kcal" id="total_kcal" value="" />
+
+		<div class="fieldset">
+			<div class="line_1">
+				<label for="c_in" class="first">사용자 정보</label>
+				<div class="two_select">
+					<label for="u_gender" class="user_label">성별</label> <input
+						type="text" name="u_gender" id="u_gender" />
+				</div>
+				<div class="two_select">
+					<label for="u_age" class="user_label">나이</label> <input type="text"
+						name="u_age" id="u_age"></input>
+				</div>
+			</div>
+			<div class="line_2">
+				<label for="c_in" class="first"></label>
+				<div class="two_select">
+					<label for="u_height" class="user_label">키</label> <input
+						type="text" name="u_height" id="u_height"></input>
+				</div>
+				<div class="two_select">
+					<label for="u_weight" class="user_label">몸무게</label> <input
+						type="text" name="u_weight" id="u_weight"></input>
+				</div>
+			</div>
+
+			<div class="line_3">
+				<label for="b_food" class="last">전날 식단 선택</label>
+				<div class="two_select_2">
+					<label for="m_morning" class='food_label'>아침</label> <select
+						name="m_morning" id="m_morning">
+						<c:forEach items="${FOODLIST}" var="foodList">
+							<option value="${foodList.t_kcal}">${foodList.t_foodname}(${foodList.t_recommendmenu})</option>
+						</c:forEach>
+					</select>
+				</div>
+				<div class="two_select_2">
+					<label for="m_afternoon" class='food_label'>점심</label> <select
+						name="m_afternoon" id="m_afternoon">
+						<c:forEach items="${FOODLIST}" var="foodList">
+
+							<option value="${foodList.t_kcal}">${foodList.t_foodname}(${foodList.t_recommendmenu})</option>
+						</c:forEach>
+					</select>
+				</div>
+				<div class="two_select_2">
+					<label for="m_evening" class='food_label'>저녁</label> <select
+						name="m_evening" id="m_evening">
+						<c:forEach items="${FOODLIST}" var="foodList">
+							<option value="${foodList.t_kcal}">${foodList.t_foodname}(${foodList.t_recommendmenu})</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+
+			<div id="btn_back">
+				<button type="button" id="btn_search" class="btn_back">입력</button>
+				<button type="reset" class="btn_back">다시작성</button>
+			</div>
+
+		</div>
+
+
+	</form>
+</body>

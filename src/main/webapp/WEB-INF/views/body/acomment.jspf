@@ -1,0 +1,59 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="rootPath" value="${pageContext.request.contextPath}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${rootPath}/resources/css/diet-list.css?ver=20190731">
+	<link rel="stylesheet" type="text/css"
+	href="${rootPath}/resources/css/diet-button.css?ver=20190731">
+
+<style>
+	div.btn-box {
+		width:96%;
+		margin:0 auto;
+	}
+</style>
+<script>
+$ (function() {
+	$("#btn_write").click(function(){
+		location.href = "${rootPath}/ac_write"
+	})
+	
+	$(".ac_row").click(function(){
+		let a_seq = $(this).attr("data-ac")
+		location.href="${rootPath}/ac_view?a_seq=" + a_seq
+	})
+})
+
+</script>
+<table class="list">
+	<tr>
+		<th>NO</th>
+		<th>작성일자</th>
+		<th>작성시각</th>
+		<th>작성자</th>
+		<th>제목</th>
+	</tr>
+
+	<c:choose>
+		<c:when test="${empty COMMENT}">
+			<tr><td colspan="5">후기가 없습니다</td></tr>
+		</c:when>
+		<c:otherwise>
+			<c:forEach items="${COMMENT}" var="AcVO" varStatus="index">
+				<tr class="ac_row" data-ac="${AcVO.a_seq}">
+					<td>${index.count}</td>
+					<td>${AcVO.a_date}</td>
+					<td>${AcVO.a_time}</td>
+					<td>${AcVO.a_writer}</td>
+					<td>${AcVO.a_subject}</td>
+				</tr>
+			</c:forEach>
+		</c:otherwise>
+	</c:choose>
+
+</table>    
+<div class="btn-box">
+	<button id="btn_write" class="bz-btn input"> 작성</button>
+</div>

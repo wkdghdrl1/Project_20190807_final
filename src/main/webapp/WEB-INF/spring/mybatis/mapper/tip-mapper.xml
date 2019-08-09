@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biz.dm.dao.TipDao">
+
+	<select id="selectAll" resultType="TipVO">
+		SELECT * FROM tbl_tip ORDER BY t_date DESC, t_time DESC
+	</select>
+
+	<select id="findBySeq" resultType="TipVO">
+		SELECT * FROM tbl_tip WHERE t_seq = #{t_seq}
+	</select>
+
+	<insert id="insert" parameterType="TipVO">
+		INSERT INTO tbl_tip(
+		t_seq,
+		t_subject,
+		t_date,
+		t_time,
+		t_writer,
+		t_substance
+		) VALUES(
+		SEQ_NOTICE.NEXTVAL,
+		#{t_subject, jdbcType=VARCHAR},
+		#{t_date,
+		jdbcType=VARCHAR},
+		#{t_time, jdbcType=VARCHAR},
+		#{t_writer,
+		jdbcType=VARCHAR},
+		#{t_substance, jdbcType=VARCHAR}
+		)
+	</insert>
+	<update id="update" parameterType="TipVO">
+		UPDATE tbl_tip
+		SET
+		t_subject = #{t_subject},
+		t_date = #{t_date},
+		t_time = #{t_time},
+		t_writer = #{t_writer},
+		t_substance = #{t_substance}
+		
+		WHERE t_seq = #{t_seq}
+		
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM tbl_tip WHERE t_seq = #{t_seq}
+	</delete>
+	
+
+</mapper>

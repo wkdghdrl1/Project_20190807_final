@@ -1,0 +1,61 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib 	uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="rootPath" value="${pageContext.request.contextPath}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${rootPath}/resources/css/diet-view.css?ver=201907312">
+	<link rel="stylesheet" type="text/css"
+	href="${rootPath}/resources/css/diet-button.css?ver=20190731">
+
+ <script>
+	$(function(){
+		$("#btn-update").click(function(){
+			location.href = "${rootPath}/tip_update?t_seq=${TIP.t_seq}"
+		})
+
+		$("#btn-delete").click(function(){
+			if(confirm("정말 삭제할까요?")) {
+				location.href = "${rootPath}/tip_delete?t_seq=${TIP.t_seq}"	
+			}
+		})
+	})
+
+</script>	
+	 	    
+<table class="bz-view-table">
+	<caption class="bz-view-caption">글 보기</caption>
+	<tr>
+		<th class="bz-view-th">작성일</th>
+		<td class="bz-view-td">${TIP.t_date}</td>
+		
+		<th class="bz-view-th">작성시간</th>
+		<td class="bz-view-td">${TIP.t_time}</td>
+	</tr>
+	<tr>
+		<th class="bz-view-th">작성자</th>
+		<td colspan="3" class="bz-view-td">${TIP.t_writer}</td>
+	</tr>
+	
+	<tr>
+		<th class="bz-view-th">제목</th>
+		<td colspan="3" class="bz-view-td">${TIP.t_subject}</td>
+	</tr>
+	<tr>
+		<td colspan="4" class="bz-view-td">${TIP.t_substance}</td>
+	</tr>
+	
+</table>
+<div class="btn-box center">
+	<button id="btn-update" 
+			type="button" 
+			class="bz-btn save">수정</button>
+	<button id="btn-delete" 
+			type="button" 
+			class="bz-btn delete">삭제</button>
+</div>
+
+
+
+
+    

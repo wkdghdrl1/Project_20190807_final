@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="NoVO" 
+					type="com.biz.dm.model.NoticeVO"/>	
+		<typeAlias alias="MemVO" 
+					type="com.biz.dm.model.MemberVO"/>	
+		<typeAlias alias="MenuVO" 
+					type="com.biz.dm.model.MenuVO"/>	
+		<typeAlias alias="TipVO" 
+					type="com.biz.dm.model.TipVO"/>
+		<typeAlias alias="AcVO" 
+					type="com.biz.dm.model.AcommentVO"/>
+		<typeAlias alias="FoodVO" 
+					type="com.biz.dm.model.FoodVO"/>
+	</typeAliases>
+</configuration>

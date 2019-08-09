@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biz.dm.dao.AcommentDao">
+
+	<select id="selectAll" resultType="AcVO">
+		SELECT * FROM tbl_acomment ORDER BY a_date DESC, a_time DESC
+	</select>
+
+	<select id="findBySeq" resultType="AcVO">
+		SELECT * FROM tbl_acomment WHERE a_seq = #{a_seq}
+	</select>
+
+	<insert id="insert" parameterType="AcVO">
+		INSERT INTO tbl_acomment(
+		a_seq,
+		a_subject,
+		a_date,
+		a_time,
+		a_writer,
+		a_substance
+		) VALUES(
+		SEQ_acomment.NEXTVAL,
+		#{a_subject, jdbcType=VARCHAR},
+		#{a_date,
+		jdbcType=VARCHAR},
+		#{a_time, jdbcType=VARCHAR},
+		#{a_writer,
+		jdbcType=VARCHAR},
+		#{a_substance, jdbcType=VARCHAR}
+		)
+	</insert>
+	<update id="update" parameterType="AcVO">
+		UPDATE tbl_acomment
+		SET
+		a_subject = #{a_subject},
+		a_date = #{a_date},
+		a_time = #{a_time},
+		a_writer = #{a_writer},
+		a_substance = #{a_substance}
+			
+		WHERE a_seq = #{a_seq}
+		
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM tbl_acomment WHERE a_seq = #{a_seq}
+	</delete>
+	
+
+</mapper>

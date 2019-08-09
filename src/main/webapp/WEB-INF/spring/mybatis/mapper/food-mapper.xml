@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biz.dm.dao.FoodDao">
+	<select id="selectFoodList" resultType="FoodVO">
+		SELECT
+			t_seq,
+			t_foodname,
+			t_nutrient,
+			t_kcal,
+			t_recommendmenu
+		FROM 
+			TBL_FOOD
+	</select>
+	
+	<select id="selectFoodListRandom" resultType="FoodVO" parameterType="FoodVO">
+		SELECT * FROM (
+			SELECT
+				T_SEQ,
+				T_FOODNAME,
+				T_NUTRIENT,
+				T_KCAL,
+				T_RECOMMENDMENU
+			FROM 
+				TBL_FOOD
+			WHERE 
+				T_RECOMMENDMENU = #{t_recommendmenu}
+			ORDER BY 
+				DBMS_RANDOM.RANDOM 
+		) WHERE 
+			ROWNUM <![CDATA[ < ]]> 4
+	</select>
+
+</mapper>

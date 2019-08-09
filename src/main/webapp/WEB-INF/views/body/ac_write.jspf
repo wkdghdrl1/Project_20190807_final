@@ -1,0 +1,50 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="rootPath" value="${pageContext.request.contextPath}" />
+<script src="${rootPath}/js/book-input.js?ver=2019071701"></script>
+<link rel="stylesheet" type="text/css"
+	href="${rootPath}/resources/css/diet-input.css?ver=20190729">
+<link rel="stylesheet" type="text/css"
+	href="${rootPath}/resources/css/diet-button.css?ver=20190731">
+<form method="POST" >
+	<fieldset>
+		<legend>후기 작성</legend>
+		
+		<!-- 
+			update할때 DB에 저장되어서 vo에 담겨 전달된
+			날짜와 시각을 임시 저장소에 보관하고 있다가
+			다시 서버로 보내주어야 한다.
+		 -->
+		<input type="hidden" name="a_date" value="${COMMENT.a_date}">
+		<input type="hidden" name="a_time" value="${COMMENT.a_time}">
+		
+		<div class="in-box">
+			<label for="a_writer">작성자</label> 
+			<input type="text" 
+				name="a_writer" id="a_writer"
+				value="<c:out value='${COMMENT.a_writer}'/>"  />
+		</div>
+		<div class="in-box">
+			<label for="a_subject">제목</label> 
+			<input type="text" 
+				name="a_subject" id="a_subject"
+				value="${COMMENT.a_subject}">
+		</div>
+
+		<div class="in-box">
+			<label></label>
+			<textarea rows="10" 
+					id="a_substance" 
+					name="a_substance">${COMMENT.a_substance}</textarea>
+		</div>
+
+		<div class="btn-box center">
+			<button type="submit" 
+					id="btn-save" class="bz-btn save">저장</button>
+			<button type="reset" 
+					class="bz-btn reset">다시작성</button>
+		
+		</div>
+	</fieldset>
+</form>

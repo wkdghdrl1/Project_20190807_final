@@ -1,0 +1,27 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="rootPath" value="${pageContext.request.contextPath}" />
+
+
+
+<link rel="stylesheet" type="text/css"
+	href="${rootPath}/resources/css/diet-header.css?ver=20190729">
+<link rel="stylesheet" type="text/css"
+	href="${rootPath}/resources/css/diet-front.css?ver=20190729">
+<link rel="stylesheet" type="text/css"
+	href="${rootPath}/resources/css/diet-nav.css?ver=20190729">
+
+
+<header class="headImg">
+	<a href="${rootPath}/"><img src="${rootPath}/resources/head.png"></a>
+</header>
+<nav>
+	<ul class="top-menu">
+		<li><a href='<c:url value = "/notice"/>'>공지사항 &nbsp; &nbsp; </a></li>
+		<li><a href='<c:url value = "/controllmenu"/>'> &nbsp; 식단관리	&nbsp; &nbsp; </a></li>
+		<li><a href='<c:url value = "/acomment"/>'>&nbsp; 후기 </a></li>
+		<li><a href='<c:url value = "/tip"/>'>&nbsp; TIP </a></li>
+	</ul>
+</nav>
+

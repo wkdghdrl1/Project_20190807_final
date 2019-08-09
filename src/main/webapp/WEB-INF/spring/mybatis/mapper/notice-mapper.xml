@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biz.dm.dao.NoticeDao">
+
+	<select id="selectAll" resultType="NoVO">
+		SELECT * FROM tbl_notice ORDER
+		BY n_date DESC, n_time DESC
+	</select>
+
+	<select id="findBySeq" resultType="NoVO">
+		SELECT * FROM tbl_notice WHERE n_seq = #{n_seq}
+	</select>
+
+	<insert id="insert" parameterType="NoVO">
+		INSERT INTO tbl_notice(
+		n_seq,
+		n_subject,
+		n_date,
+		n_time,
+		n_writer,
+		n_substance
+		) VALUES(
+		SEQ_NOTICE.NEXTVAL,
+		#{n_subject, jdbcType=VARCHAR},
+		#{n_date,
+		jdbcType=VARCHAR},
+		#{n_time, jdbcType=VARCHAR},
+		#{n_writer,
+		jdbcType=VARCHAR},
+		#{n_substance, jdbcType=VARCHAR}
+		)
+	</insert>
+	<update id="update" parameterType="NoVO">
+		UPDATE tbl_notice
+		SET
+		n_subject = #{n_subject},
+		n_date = #{n_date},
+		n_time = #{n_time},
+		n_writer = #{n_writer},
+		n_substance = #{n_substance}
+		
+		WHERE n_seq = #{n_seq}
+		
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM tbl_notice WHERE n_seq = #{n_seq}
+	</delete>
+	
+
+</mapper>

@@ -1,0 +1,136 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="rootPath" value="${pageContext.request.contextPath}" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${rootPath}/resources/css/diet-controll.css?ver=2019080702">
+
+
+<script>
+	$(document).ready(function(){
+		changeRecommendmenu($("#c_menu1 option:selected").val());
+		
+		var total_per = Number("${MemVO.total_kcal}")/40;
+		
+		var base_per = Number("${MemVO.base_kcal}")/40;
+		
+		
+		
+		$("#total_per").attr('style','height:40px;width:'+total_per+'%;background-color:red;');
+		$("#base_per").attr('style','height:40px;width:'+base_per+'%;background-color:blue;');
+	});
+
+	function changeRecommendmenu(_val){
+		$.ajax({
+            type     : "GET"
+         ,  url      : "${rootPath}/selectFoodListAjax"         
+         ,  data     : {t_recommendmenu : _val}
+         ,  dataType : "json"
+         ,  success  : function(result){
+        	 var src = "<table>";
+        	 src +="<tr>";
+			 src +="<td>No</td>";
+			 src +="<td>음식명</td>";
+			 src +="<td>주요 영양소</td>";
+			 src +="<td>Kcal</td>";
+			 src +="</tr>";
+			 
+        	 $.each(result, function(idx, data){
+				src +="<tr>";
+				src +="<td>"+ (idx + 1) +"</td>";
+				src +="<td>"+ data.t_foodname +"</td>";
+				src +="<td>"+ data.t_nutrient +"</td>";
+				src +="<td>"+ data.t_kcal +"</td>";
+				src +="</tr>";
+        	 });
+        	 
+			 src +="</table>";
+
+        	 $(".c_info5").html(src);
+            }
+         ,  error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+         }
+        });
+	}
+				
+</script>			
+<form method="POST">
+	<div class="fieldset">
+		<div class="c_info4">
+			<table class="list">
+				<tr>
+					<th>성별</th>
+					<td>${MemVO.u_gender}</td>
+					<th>나이</th>
+					<td>${MemVO.u_age}</td>
+					<th>키</th>
+					<td>${MemVO.u_height}</td>
+					<th>몸무게</th>
+					<td>${MemVO.u_weight}</td>
+				</tr>
+			</table>
+		</div>
+		
+		<div class="c_info4">
+			<table >
+				<tr>
+					<th>전날 Kcal</th>
+					<td>${MemVO.total_kcal}</td>
+					<th>권장 Kcal</th>
+					<td>${MemVO.base_kcal}</td>
+				
+					<c:choose>
+						<c:when test="${MemVO.total_kcal > MemVO.base_kcal }">
+							<td>권장 칼로리보다 덜 드셔야겠어요!!</td>
+						</c:when>
+						<c:otherwise>
+							<td>권장 칼로리보다 덜 드시고 계시네요!!</td>
+						</c:otherwise>
+					</c:choose>
+				</tr>
+			</table>
+		</div>
+		
+		<div style="margin-left:150px; margin-right:150px;">
+			<table style="width:100%;">
+				<colgroup>
+					<col width="20%" />
+					<col width="80%" />
+				</colgroup>
+				<tbody>
+					<tr>
+						<td>전날칼로리</td>
+						<td>
+							<section id="graph" style="width:100%;">
+								<p style="height:40px;width:200px;background-color:red;" id="total_per"><em>${MemVO.total_kcal}</em><strong>  Kcal</strong></p>
+							</section>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>권장칼로리</td>
+						<td>
+							<section id="graph" style="width:100%;">
+								<p style="height:40px;width:200px;background-color:red;" id="base_per"><em>${MemVO.base_kcal}</em><strong>  Kcal</strong></p>
+							</section>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="c_info3">
+			<label class="i3_label">식단</label> 
+			<select name="menu1" id="c_menu1" onChange="javascript:changeRecommendmenu(this.value);">
+				<option>일반식</option>
+				<option>관리식</option>
+			</select>
+		</div>
+	
+		<div class="c_info5">
+		</div>
+	</div>
+</form>
